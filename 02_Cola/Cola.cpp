@@ -13,7 +13,7 @@ int main() {
 
      choice = getUserInput();
 
-     if (choice == 1) {
+/*     if (choice == 1) {
           std::cout << "You have chosen Pepsi.";
      }
      else if (choice == 2) {
@@ -27,6 +27,24 @@ int main() {
      }
      else if (choice == 5) {
           std::cout << "You have chosen Water.";
+     }*/
+
+     switch (choice) {
+          case 1:
+               std::cout << "You have chosen Pepsi.";
+               break;
+          case 2:
+               std::cout << "You have chosen Dr. Pepper.";
+               break;
+          case 3:
+               std::cout << "You have chosen Fanta.";
+               break;
+          case 4:
+               std::cout << "You have chosen Sprite.";
+               break;
+          case 5:
+               std::cout << "You have chosen Water.";
+               break;
      }
 
      return 0;
