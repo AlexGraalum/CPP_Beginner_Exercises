@@ -11,8 +11,8 @@ int main(int argc, char** argv) {
 
      x = getUserInput();
 
-     if (x == 100) {
-          std::cout << "Congrats! You got a perfect score!\n";
+     if ((x >= 90) && (x <= 100)) {
+          std::cout << "Congrats! You got an A!\n";
      }
 
      return 0;
