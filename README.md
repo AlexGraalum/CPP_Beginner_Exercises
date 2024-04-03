@@ -9,8 +9,8 @@ CPP Beginner Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 |-------|-------|--------|
 | 1. | Grading Program | In Progress |
 | 2. | Cola Machine | Planned |
-| 4. | While (user == gullible) | Planned |
-| 3. | Pancake Glutton | Planned |
+| 3. | While (user == gullible) | Planned |
+| 4. | Pancake Glutton | Planned |
 | 5. | Bracketing Search | Planned |
 | 6. | Tic Tac Toe | Planned |
 | 7. | Dungeon Crawl | Planned |

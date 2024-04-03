@@ -71,7 +71,7 @@ i.e.\
 "Baby Thumper was born!\
 Bunny Fufu was born!\
 Radioactive Mutant Vampire Bunny Darth Maul was born!\
-Bunny Julius Caesar died!"\
+Bunny Julius Caesar died!"
 
 Rules:
 
