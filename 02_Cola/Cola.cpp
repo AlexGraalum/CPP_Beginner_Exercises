@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 
+//Defines
+#define defif
+
 //Prototypes
 int getUserInput();
 
@@ -13,7 +16,9 @@ int main() {
 
      choice = getUserInput();
 
-/*     if (choice == 1) {
+#ifdef defif
+     //If Statement
+     if (choice == 1) {
           std::cout << "You have chosen Pepsi.";
      }
      else if (choice == 2) {
@@ -27,8 +32,12 @@ int main() {
      }
      else if (choice == 5) {
           std::cout << "You have chosen Water.";
-     }*/
-
+     }
+     else{
+          std::cout << "ERROR: That is an invalid choice. Your money has been returned.";
+     }
+#else
+     //Switch Statement
      switch (choice) {
           case 1:
                std::cout << "You have chosen Pepsi.";
@@ -45,11 +54,18 @@ int main() {
           case 5:
                std::cout << "You have chosen Water.";
                break;
+          default:
+               std::cout << "ERROR: That is an invalid choice. Your money has been returned.";
+               break;
      }
-
+#endif
      return 0;
 }
 
+////Get User Input
+//Use cin to get user input
+//Handle invalid user inputs
+//Return valid entry
 int getUserInput() {
      int x = 0;
 

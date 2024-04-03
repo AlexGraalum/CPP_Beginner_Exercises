@@ -17,4 +17,4 @@ Output which beverage they chose
 - [x] **X** If the program uses if statements, modify it to use a switch statement.\
 If instead it uses a switch statement, modify the program to use if statements.
 
-- [ ] **X X** Modify the program so that if the user enters an invalid choice, it will output an error message.
+- [x] **X X** Modify the program so that if the user enters an invalid choice, it will output an error message.
