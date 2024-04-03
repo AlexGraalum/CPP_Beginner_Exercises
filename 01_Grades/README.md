@@ -2,9 +2,9 @@
 
 Requires: 
 
-- Variables, Data Types, Numeric Operators
+- Variables, Data Types, Numerical Operators
 
-- Basic Input/Ouput
+- Basic Input/Output
 
 - Logic (If Statements, Switch Statements)
 
