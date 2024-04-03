@@ -10,7 +10,7 @@ Requires:
 
 ---
 
-- [ ] Write a program that presents the user with a choice of 5 beverages (Coke, Water, Sprite, ...).\
+- [x] Write a program that presents the user with a choice of 5 beverages (Coke, Water, Sprite, ...).\
 Then allow the user to choose a beverage by entering a number 1-5.\
 Output which beverage they chose
 

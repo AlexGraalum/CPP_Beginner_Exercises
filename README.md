@@ -7,8 +7,8 @@ CPP Beginner Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 
 | | Title | Status |
 |-------|-------|--------|
-| 1. | Grading Program | In Progress |
-| 2. | Cola Machine | Planned |
+| 1. | Grading Program | Complete |
+| 2. | Cola Machine | In Progress |
 | 3. | While (user == gullible) | Planned |
 | 4. | Pancake Glutton | Planned |
 | 5. | Bracketing Search | Planned |
