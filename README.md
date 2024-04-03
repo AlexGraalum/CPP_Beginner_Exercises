@@ -35,6 +35,8 @@ CPP Beginner Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 
 - Strings & String Functions
 
+- Functions
+
 - Structures/Classes
 
 - Enumerated Data
