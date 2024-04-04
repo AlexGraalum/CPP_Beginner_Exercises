@@ -19,7 +19,7 @@ Once the data has been entered, the program must analyze the data and output whi
 
 - [x] **X** Modify the program so that it outputs which person ate the least number of pancakes for breakfast.
 
-- [ ] **X X X X** Modify the program so that it outputs a list in order of number of pancakes eaten by all 10 people.\
+- [x] **X X X X** Modify the program so that it outputs a list in order of number of pancakes eaten by all 10 people.\
 i.e.\
 Person 4: ate 10 pancakes\
 Person 3: ate 7 pancakes\

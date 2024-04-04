@@ -10,7 +10,7 @@ CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 | 1. | Grading Program | Complete |
 | 2. | Cola Machine | Complete |
 | 3. | While (user == gullible) | Complete |
-| 4. | Pancake Glutton | In Progress |
+| 4. | Pancake Glutton | Complete |
 | 5. | Bracketing Search | Planned |
 | 6. | Tic Tac Toe | Planned |
 | 7. | Dungeon Crawl | Planned |
