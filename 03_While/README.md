@@ -12,7 +12,7 @@ Requires:
 
 ---
 
-- [ ] Write a program that continues to ask the user to enter any number other than 5 until the user enters the number 5.\
+- [x] Write a program that continues to ask the user to enter any number other than 5 until the user enters the number 5.\
 Then tell the user "Hey! You weren't supposed to enter 5!" and exit the program.
 
 - [ ] **X** Modify the program so that after 10 iterations, if the user hasn't entered 5, it will tell the user "Wow, you're more patient than I am. You win!"
