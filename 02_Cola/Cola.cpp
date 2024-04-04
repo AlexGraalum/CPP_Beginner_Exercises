@@ -73,7 +73,7 @@ int getUserInput() {
      std::cin >> x;
 
      while (std::cin.fail()) {
-          std::cout << "That was not an integer.\nEnter an integer from 1 to 5.\n>>";
+          std::cout << "That was not an integer.\nEnter an integer from 1 to 5.\n>> ";
           std::cin.clear();
           std::cin.ignore(INT_MAX, '\n');
           std::cin >> x;
