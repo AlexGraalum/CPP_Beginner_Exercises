@@ -1,6 +1,6 @@
 # README
 
-CPP Beginner Exercises located at https://cplusplus.com/articles/N6vU7k9E/
+CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 
 
 ## Exercises
