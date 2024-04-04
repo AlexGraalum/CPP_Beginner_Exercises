@@ -6,19 +6,29 @@ int getUserInput();
 
 //Functions
 int main(int argc, char** argv) {
-     int x;
+     int x, y = 0;
 
      std::cout << "Enter any number other than 5.\n";
 
      do {
           x = getUserInput();
-     } while (x != 5);
+          y++;
+     } while (x != 5 && y < 10);
 
-     std::cout << "Hey! You weren't supposed to enter 5!\n";
+     if (x == 5) {
+          std::cout << "Hey! You weren't supposed to enter 5!\n";
+     }
+     else {
+          std::cout << "Wow, you're more patient than I am. You win!\n";
+     }
 
      return 0;
 }
 
+////Get User Input
+//Use cin to get user input
+//Handle invalid user inputs
+//Return valid entry
 int getUserInput() {
      int x = 0;
 
