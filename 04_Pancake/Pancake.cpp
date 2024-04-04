@@ -15,16 +15,23 @@ int main(int argc, char** argv) {
           cakes[i] = getUserInput();
      }
 
-     int most = 0, index = 0;
+     int most = 0, a = 0;
+     int least = INT_MAX, b = 0;
 
      for (int i = 0; i < 10; i++) {
           if (cakes[i] > most) {
                most = cakes[i];
-               index = i;
+               a = i+1;
+          }
+
+          if (cakes[i] < least) {
+               least = cakes[i];
+               b = i+1;
           }
      }
 
-     std::cout << "Person " << index << " ate " << most << " pancakes.\nThat's a lot!\n";
+     std::cout << "Person " << a << " ate the most at " << most << " pancakes.\n";
+     std::cout << "Person " << b << " ate the least at " << least << " pancakes.\n";
 
      return 0;
 }
