@@ -8,7 +8,7 @@ int getUserInput();
 int main(int argc, char** argv) {
      int x, y = 0;
 
-     std::cout << "Enter any number other than 5.\n";
+     /*std::cout << "Enter any number other than 5.\n";
 
      do {
           x = getUserInput();
@@ -20,7 +20,18 @@ int main(int argc, char** argv) {
      }
      else {
           std::cout << "Wow, you're more patient than I am. You win!\n";
+     }*/
+
+     std::cout << "Enter any number other than " << y << ".\n";
+     x = getUserInput();
+
+     while (x != y) {
+          y++;
+          std::cout << "Enter any number other than " << y << ".\n";
+          x = getUserInput();
      }
+
+     std::cout << "Hey! You weren't supposed to enter " << y << ".\n";
 
      return 0;
 }
