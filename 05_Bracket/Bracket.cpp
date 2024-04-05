@@ -8,7 +8,7 @@ int getUserInput();
 
 //Functions
 int main(int argc, char** argv) {
-     int num, guess;
+     int num, guess, count = 0;
      std::srand(static_cast<unsigned int>(time(NULL)));
 
      num = rand() % 100 + 1;
@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
      guess = getUserInput();
 
      while (guess != num) {
+          count++;
           if (guess > num) {
                std::cout << "That's too high. Try again.\n";
           }
@@ -27,7 +28,7 @@ int main(int argc, char** argv) {
           guess = getUserInput();
      }
 
-     std::cout << "Well done! You guessed the correct number.";
+     std::cout << "Well done! You guessed the correct number in " << count << " guesses.\n";
 
      return 0;
 }
