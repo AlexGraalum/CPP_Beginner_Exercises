@@ -21,6 +21,6 @@ The program must let the user continue to guess until the user correctly guesses
 
 - [x] **X** Modify the program to output how many guesses it took the user to correctly guess the right number.
 
-- [ ] **X X** Modify the program so that instead of the user guessing a number the computer generated, the computer guesses the number the user has decided. The user must tell the computer whether it guessed too high or too low.
+- [x] **X X** Modify the program so that instead of the user guessing a number the computer generated, the computer guesses the number the user has decided. The user must tell the computer whether it guessed too high or too low.
 
 - [ ] **X X X X** Modify the program so that no matter what number the user thinks of (1-100), the computer can guess that number in 7 or less guesses.

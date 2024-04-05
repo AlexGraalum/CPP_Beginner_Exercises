@@ -3,11 +3,16 @@
 #include <stdlib.h>
 #include <time.h>
 
+//Defines
+#define compguess
+
 //Prototypes
 int getUserInput();
 
 //Functions
 int main(int argc, char** argv) {
+
+#ifndef compguess
      int num, guess, count = 0;
      std::srand(static_cast<unsigned int>(time(NULL)));
 
@@ -29,7 +34,32 @@ int main(int argc, char** argv) {
      }
 
      std::cout << "Well done! You guessed the correct number in " << count << " guesses.\n";
+#else
+     int ready, guess, correct, count = 0;
+     std::srand(static_cast<unsigned int>(time(NULL)));
+     
+     std::cout << "Think of a number from 1 to 100, and I'll try to guess that number.\nType 1 when you're ready.\n";
+     ready = getUserInput();
 
+     while (ready != 1) {
+          ready = getUserInput();
+     }
+
+     do {
+          count++;
+
+          guess = rand() % 100 + 1;
+          std::cout << "Is your number " << guess << "?\n0: Too Low; 1: Correct; 2: Too High\n";
+          correct = getUserInput();
+
+          while ((correct < 0) && (correct > 2)) {
+               correct = getUserInput();
+          }
+     } while (correct != 1);
+
+     std::cout << "It took me " << count << " guesses to guess correctly.\n";
+
+#endif
      return 0;
 }
 
