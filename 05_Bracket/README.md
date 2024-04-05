@@ -14,7 +14,7 @@ Requires:
 
 ---
 
-- [ ] Write a program that calculates a random number from 1 to 100.\
+- [x] Write a program that calculates a random number from 1 to 100.\
 The program then asks the user to guess the number.\
 If the user guesses too high or too low, the program should output "Too High" or "Too Low" accordingly.\
 The program must let the user continue to guess until the user correctly guesses the number.
