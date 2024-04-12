@@ -11,7 +11,7 @@ CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 | 2. | Cola Machine | Complete |
 | 3. | While (user == gullible) | Complete |
 | 4. | Pancake Glutton | Complete |
-| 5. | Bracketing Search | Planned |
+| 5. | Bracketing Search | Complete |
 | 6. | Tic Tac Toe | Planned |
 | 7. | Dungeon Crawl | Planned |
 | 8. | Fun With Functions | Planned |
