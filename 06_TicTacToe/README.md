@@ -14,7 +14,7 @@ Requires:
 
 ---
 
-- [ ] Make a two-player tic tac toe game.
+- [x] Make a two-player tic tac toe game.
 
 - [ ] **X** Modify the program so that it will announce when a player has won the game (and which player won, x or o)
 
