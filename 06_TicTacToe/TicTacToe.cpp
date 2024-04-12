@@ -14,6 +14,7 @@
 void getKeyInput(int, int[]);
 void printBoard(int[], int[]);
 int checkForSpot(int[], int[], int);
+bool checkForWin(int[]);
 
 //Functions
 int main(int argc, char** argv) {
@@ -25,7 +26,9 @@ int main(int argc, char** argv) {
 
      while(1){
           system("CLS");
+
           printBoard(board, idx);
+          if (checkForWin(board)) break;
 
           int c = _getch();
           if (c == KEY_ESC) break;
@@ -33,6 +36,7 @@ int main(int argc, char** argv) {
           if (c == KEY_SPC) {
                turn  = checkForSpot(board, idx, turn);
           }
+
      }
      return 0;
 }
@@ -95,4 +99,62 @@ int checkForSpot(int board[], int idx[], int turn) {
           board[i] = 2;
           return 0;
      }
+}
+
+////Check If A Player Has Won
+//Check the 5 key spaces for a win
+//Announce the winner on win
+bool checkForWin(int board[]) {
+     //0 1 2
+     //3 _ _
+     //6 _ _
+     if (board[0] != 0) {
+          //0 1 2
+          //3 4 _
+          //6 _ 8
+          if ((board[0] == board[1] && board[0] == board[2])
+               || (board[0] == board[3] && board[0] == board[6])
+               || (board[0] == board[4] && board[0] == board[8])) {
+               std::cout << "Congrats! Player " << board[0] << " won!\n";
+               return true;
+          }
+     }
+     if (board[1] != 0) {
+          //_ 1 _
+          //_ 4 _
+          //_ 7 _
+          if (board[1] == board[4] && board[1] == board[7]) {
+               std::cout << "Congrats! Player " << board[1] << " won!\n";
+               return true;
+          }
+     }
+     if (board[2] != 0) {
+          //_ _ 2
+          //_ 4 5
+          //6 _ 8
+          if ((board[2] == board[4] && board[2] == board[6])
+               || (board[2] == board[5] && board[2] == board[8])) {
+               std::cout << "Congrats! Player " << board[2] << " won!\n";
+               return true;
+          }
+     }
+     if (board[3] != 0) {
+          //_ _ _
+          //3 4 5
+          //_ _ _
+          if (board[3] == board[4] && board[3] == board[5]) {
+               std::cout << "Congrats! Player " << board[3] << " won!\n";
+               return true;
+          }
+     }
+     if (board[6] != 0) {
+          //_ _ _
+          //_ _ _
+          //6 7 8
+          if (board[6] == board[7] && board[6] == board[8]) {
+               std::cout << "Congrats! Player " << board[6] << " won!\n";
+               return true;
+          }
+     }
+     return false;
 }
