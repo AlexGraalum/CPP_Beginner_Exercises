@@ -1,6 +1,8 @@
 //Includes
 #include <iostream>
 #include <conio.h>
+#include <stdlib.h>
+#include <time.h>
 
 //Defines
 #define KEY_UP 72
@@ -10,11 +12,14 @@
 #define KEY_ESC 27
 #define KEY_SPC 32
 
+#define play_comp
+
 //Prototypes
 void getKeyInput(int, int[]);
 void printBoard(int[], int[]);
 int checkForSpot(int[], int[], int);
 bool checkForWin(int[]);
+int getCompPlay(int[]);
 
 //Functions
 int main(int argc, char** argv) {
@@ -24,19 +29,31 @@ int main(int argc, char** argv) {
      int idx[] = { 0, 0 };
      int turn = 0;
 
+     srand(time(NULL));
+
      while(1){
           system("CLS");
 
           printBoard(board, idx);
           if (checkForWin(board)) break;
 
-          int c = _getch();
-          if (c == KEY_ESC) break;
-          getKeyInput(c, idx);
-          if (c == KEY_SPC) {
-               turn  = checkForSpot(board, idx, turn);
+#ifdef play_comp
+          if (turn == 0) {
+#endif
+               int c = _getch();
+               if (c == KEY_ESC) break;
+               if (c == KEY_SPC) {
+                    turn = checkForSpot(board, idx, turn);
+               }
+               else {
+                    getKeyInput(c, idx);
+               }
+#ifdef play_comp
           }
-
+          else {
+               turn = getCompPlay(board);
+          }
+#endif
      }
      return 0;
 }
@@ -101,60 +118,56 @@ int checkForSpot(int board[], int idx[], int turn) {
      }
 }
 
-////Check If A Player Has Won
-//Check the 5 key spaces for a win
-//Announce the winner on win
+////Check If A Player Has Won           0 1 2
+//Check the 5 key spaces for a win      3 _ _
+//Announce the winner on win            6 _ _
 bool checkForWin(int board[]) {
-     //0 1 2
-     //3 _ _
-     //6 _ _
      if (board[0] != 0) {
-          //0 1 2
-          //3 4 _
-          //6 _ 8
-          if ((board[0] == board[1] && board[0] == board[2])
-               || (board[0] == board[3] && board[0] == board[6])
-               || (board[0] == board[4] && board[0] == board[8])) {
+          if ((board[0] == board[1] && board[0] == board[2])               //0 1 2
+               || (board[0] == board[3] && board[0] == board[6])           //3 4 _
+               || (board[0] == board[4] && board[0] == board[8])) {        //6 _ 8
                std::cout << "Congrats! Player " << board[0] << " won!\n";
                return true;
           }
      }
      if (board[1] != 0) {
-          //_ 1 _
-          //_ 4 _
-          //_ 7 _
-          if (board[1] == board[4] && board[1] == board[7]) {
-               std::cout << "Congrats! Player " << board[1] << " won!\n";
-               return true;
+          if (board[1] == board[4] && board[1] == board[7]) {              //_ 1 _
+               std::cout << "Congrats! Player " << board[1] << " won!\n";  //_ 4 _
+               return true;                                                //_ 7 _
           }
      }
      if (board[2] != 0) {
-          //_ _ 2
-          //_ 4 5
-          //6 _ 8
-          if ((board[2] == board[4] && board[2] == board[6])
-               || (board[2] == board[5] && board[2] == board[8])) {
-               std::cout << "Congrats! Player " << board[2] << " won!\n";
+          if ((board[2] == board[4] && board[2] == board[6])               //_ _ 2
+               || (board[2] == board[5] && board[2] == board[8])) {        //_ 4 5
+               std::cout << "Congrats! Player " << board[2] << " won!\n";  //6 _ 8
                return true;
           }
      }
      if (board[3] != 0) {
-          //_ _ _
-          //3 4 5
-          //_ _ _
-          if (board[3] == board[4] && board[3] == board[5]) {
-               std::cout << "Congrats! Player " << board[3] << " won!\n";
-               return true;
+          if (board[3] == board[4] && board[3] == board[5]) {              //_ _ _
+               std::cout << "Congrats! Player " << board[3] << " won!\n";  //3 4 5
+               return true;                                                //_ _ _
           }
      }
      if (board[6] != 0) {
-          //_ _ _
-          //_ _ _
-          //6 7 8
-          if (board[6] == board[7] && board[6] == board[8]) {
-               std::cout << "Congrats! Player " << board[6] << " won!\n";
-               return true;
+          if (board[6] == board[7] && board[6] == board[8]) {              //_ _ _
+               std::cout << "Congrats! Player " << board[6] << " won!\n";  //_ _ _
+               return true;                                                //6 7 8
           }
      }
      return false;
+}
+
+////Let The Computer Play
+//Choose a random position
+//Check if it's already taken
+int getCompPlay(int board[]) {
+     int i = 0;
+
+     do {
+          i = rand() % 9;
+     } while (board[i] != 0);
+
+     board[i] = 2;
+     return 0;
 }
