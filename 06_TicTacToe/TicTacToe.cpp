@@ -19,16 +19,13 @@ void getKeyInput(int c, int idx[2]);
 void printBoard(int board[3][3], int idx[2]);
 int checkForSpot(int board[3][3], int idx[2], int turn);
 bool checkForWin(int board[3][3]);
+bool checkForTie(int board[3][3]);
 void stateWinner(int player);
 void getCompPlay(int board[3][3]);
 bool canBlockPlayer(int board[3][3]);
-int blockPlayer(int board[3][3], int idx[2]);
 
 //Functions
 int main(int argc, char** argv) {
-     //int board[9] = { 0,0,0, 
-     //                 0,0,0, 
-     //                 0,0,0 };
      int board[3][3] = { {0,0,0},
                          {0,0,0},
                          {0,0,0} };
@@ -42,6 +39,7 @@ int main(int argc, char** argv) {
 
           printBoard(board, idx);
           if (checkForWin(board)) break;
+          if (checkForTie(board)) break;
 
 #ifdef play_comp
           if (turn == 0) {
@@ -173,6 +171,18 @@ bool checkForWin(int board[3][3]) {
      return false;
 }
 
+////Check For Tie
+//Check if all spaces are taken up
+bool checkForTie(int board[3][3]) {
+     for (int y = 0; y < 3; y++) {
+          for (int x = 0; x < 3; x++) {
+               if (board[x][y] == 0) return false;
+          }
+     }
+     std::cout << "It's a tie!\n";
+     return true;
+}
+
 ////Announce Winner
 //Announce which Player won, or if Comp won
 void stateWinner(int player) {
@@ -200,17 +210,48 @@ void getCompPlay(int board[3][3]) {
 ////Can Computer Block Player
 //Check if the player can be blocked
 bool canBlockPlayer(int board[3][3]) {
-     for (int y = 0; y < 3; y++) {
-          for (int x = 0; x < 3; x++) {
-               int idx[2] = {x, y};
-
-          }
+     //Vertical
+     for (int x = 0; x < 3; x++) {
+          if (board[x][0] == 1 && board[x][1] == 1) {  //  0 1 2
+               board[x][2] = 2;                        //0 x x x
+               return true;                            //1 x x x
+          }                                            //2 o o o
+          if (board[x][0] == 1 && board[x][2] == 1) {  //  0 1 2
+               board[x][1] = 2;                        //0 x x x
+               return true;                            //1 o o o
+          }                                            //2 x x x
+          if (board[x][1] == 1 && board[x][2] == 1) {  //  0 1 2
+               board[x][0] = 2;                        //0 o o o
+               return true;                            //1 x x x
+          }                                            //2 x x x
      }
+     //Horizontal
+     for (int y = 0; y < 3; y++) {
+          if (board[0][y] == 1 && board[1][y] == 1) {  //  0 1 2
+               board[2][y] = 2;                        //0 x x o
+               return true;                            //1 x x o
+          }                                            //2 x x o
+          if (board[0][y] == 1 && board[2][y] == 1) {  //  0 1 2
+               board[1][y] = 2;                        //0 x o x
+               return true;                            //1 x o x
+          }                                            //2 x o x
+          if (board[1][y] == 1 && board[2][y] == 1) {  //  0 1 2
+               board[0][y] = 2;                        //0 o x x
+               return true;                            //1 o x x
+          }                                            //2 o x x
+     }
+     //Diagonal
+     if (board[0][0] == 1 && board[1][1]) {            //  0 1 2
+          board[2][2] = 2;                             //0 x _ _
+          return true;                                 //1 _ x _
+     }                                                 //2 _ _ o
+     if (board[0][0] == 1 && board[2][2]) {            //  0 1 2
+          board[1][1] = 2;                             //0 x _ _
+          return true;                                 //1 _ o _
+     }                                                 //2 _ _ x
+     if (board[1][1] == 1 && board[2][2]) {            //  0 1 2
+          board[0][0] = 2;                             //0 o _ _
+          return true;                                 //1 _ x _
+     }                                                 //2 _ _ x
      return false;
-}
-
-////Block The Player
-//
-int blockPlayer(int board[3][3], int idx[2]) {
-     return 0;
 }

@@ -12,7 +12,7 @@ CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 | 3. | While (user == gullible) | Complete |
 | 4. | Pancake Glutton | Complete |
 | 5. | Bracketing Search | Complete |
-| 6. | Tic Tac Toe | In Progress |
+| 6. | Tic Tac Toe | Complete |
 | 7. | Dungeon Crawl | Planned |
 | 8. | Fun With Functions | Planned |
 | 9. | Strings Will Betray You | Planned |
