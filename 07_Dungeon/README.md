@@ -34,7 +34,7 @@ or\
 0 0 0 0 0 0 0 0 0 4\
 \
 Allow the user (Marked G or 5 in the examples) to move either up, down, left, or right each turn.\
-If the player steps on a trap (Marked T or 7, they lose.\
+If the player steps on a trap (Marked T or 7), they lose.\
 If they make it to the treasure (Marked X or 4), they win.
 
 - [ ] **X X** Add enemies that move randomly in any direction oncer per turn.\
