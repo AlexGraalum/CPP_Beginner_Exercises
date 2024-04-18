@@ -91,6 +91,9 @@ int main(int argc, char** argv) {
      return 0;
 }
 
+////Initialize Settings
+//Change stdout for UTF-16 support
+//Change console font size
 void initSettings() {
      _setmode(_fileno(stdout), _O_U16TEXT);
      CONSOLE_FONT_INFOEX cfi;
@@ -100,6 +103,91 @@ void initSettings() {
      SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
 
+////Initialize Player
+//Create new player position
+//Randomly place the player
+int* initPlayer() {
+     int* player = new int[2];
+
+     player[0] = rand() % width;
+     player[1] = rand() % height;
+
+     return player;
+}
+
+////Clear Player
+//Delete the player
+void clearPlayer() {
+     delete player;
+}
+
+////Initialize Treasure
+//Create new treasure position
+//Randomly place treasure
+//Ensure treasure does not colllide
+int* initTreasure() {
+     int* treasurePos = new int[2];
+     int x = 0, y = 0;
+
+     do {
+          x = rand() % width;
+          y = rand() % height;
+     } while (x == player[0] && y == player[1]);
+
+     treasurePos[0] = x;
+     treasurePos[1] = y;
+
+     return treasurePos;
+}
+
+////Clear Treasure
+//Delete the treasure
+void clearTreasure() {
+     delete treasure;
+}
+
+////Initialize Traps
+//Create a new array of trap positions
+int** initTraps() {
+     int** traps = new int* [trapCount];
+
+     for (int i = 0; i < trapCount; i++) {
+          traps[i] = new int[2];
+     }
+
+     return traps;
+}
+
+////Place Traps
+//Randomly place traps
+//Ensure traps do not collide
+void placeTraps() {
+     for (int i = 0; i < trapCount; i++) {
+          int x, y;
+          do {
+               x = rand() % width;
+               y = rand() % height;
+
+          } while (!noCollision(x, y, i));
+
+          traps[i][0] = x;
+          traps[i][1] = y;
+     }
+}
+
+////Clear Traps
+//Delete each trap
+//Delete array of traps
+void clearTraps() {
+     for (int i = 0; i < trapCount; i++) {
+          delete traps[i];
+     }
+     delete traps;
+}
+
+////Initialize Dungeon
+//Create new 2D array of unicode characters
+//Place Floor, Trap, and Treasure characters
 wchar_t** initDungeon() {
      wchar_t** dungeon = new wchar_t* [height];
 
@@ -119,10 +207,11 @@ wchar_t** initDungeon() {
           }
      }
 
-     
      return dungeon;
 }
 
+////Clear Dungeon
+//Delete the dungeon
 void clearDungeon() {
      for (int y = 0; y < height; y++) {
           delete dungeon[y];
@@ -130,69 +219,10 @@ void clearDungeon() {
      delete dungeon;
 }
 
-int* initPlayer() {
-     int* player = new int[2];
-
-     player[0] = rand() % width;
-     player[1] = rand() % height;
-
-     return player;
-}
-
-void clearPlayer() {
-     delete player;
-}
-
-int* initTreasure() {
-     int* treasurePos = new int[2];
-     int x = 0, y = 0;
-
-     do {
-          x = rand() % width;
-          y = rand() % height;
-     } while (x == player[0] && y == player[1]);
-
-     treasurePos[0] = x;
-     treasurePos[1] = y;
-
-     return treasurePos;
-}
-
-void clearTreasure() {
-     delete treasure;
-}
-
-int** initTraps() {
-     int** traps = new int* [trapCount];
-     
-     for (int i = 0; i < trapCount; i++) {
-          traps[i] = new int[2];
-     }
-     
-     return traps;
-}
-
-void placeTraps() {
-     for (int i = 0; i < trapCount; i++) {
-          int x, y;
-          do {
-               x = rand() % width;
-               y = rand() % height;
-
-          } while (!noCollision(x, y, i));
-
-          traps[i][0] = x;
-          traps[i][1] = y;
-     }
-}
-
-void clearTraps() {
-     for (int i = 0; i < trapCount; i++) {
-          delete traps[i];
-     }
-     delete traps;
-}
-
+////No Collision
+//Check if the current position intersects with player
+//Check if the current position intersects with treasure
+//Check if the current position intersects with a trap
 bool noCollision(int x, int y, int i) {
      if ((x == player[0]) && (y == player[1])) return false;
      if ((x == treasure[0]) && (y == treasure[1])) return false;
@@ -230,6 +260,10 @@ void getKeyInput(int c) {
      }
 }
 
+////Print Dungeon
+//Print contents of dungeon
+//Print border around dungeon
+//Print player at player position
 void printDungeon() {
      std::wcout << TL;
      for (int i = 0; i < width; i++) std::wcout << H;
@@ -250,9 +284,12 @@ void printDungeon() {
      }
      std::wcout << BL;
      for (int i = 0; i < width; i++) std::wcout << H;
-     std::wcout << BR;
+     std::wcout << BR << std::endl;
 }
 
+////Move Player
+//Move the player position
+//Constrain player position within dungeon bounds
 void movePlayer(int dirX, int dirY) {
      if ((dirX < 0) && (player[0] > 0)) player[0] += dirX;
      if ((dirX > 0) && (player[0] < (width - 1))) player[0] += dirX;
@@ -260,6 +297,18 @@ void movePlayer(int dirX, int dirY) {
      if ((dirY > 0) && (player[1] < (height - 1))) player[1] += dirY;
 }
 
+////Win Or Lose
+//Check if the player intersects a trap or the treasure
 bool winOrLose() {
-
+     if (player[0] == treasure[0] && player[1] == treasure[1]) {
+          std::wcout << "You found the treasure!\nGood Job!!\n\n";
+          return true;
+     }
+     for (int i = 0; i < trapCount; i++) {
+          if (player[0] == traps[i][0] && player[1] == traps[i][1]) {
+               std::wcout << "A trap got you!\nThat's not good...\n\n";
+               return true;
+          }
+     }
+     return false;
 }
