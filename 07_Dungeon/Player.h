@@ -2,16 +2,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player {
-private:
-     int* position;
+#include "Entity.h"
+
+class Player: public Entity {
 public:
-     Player();
-     ~Player();
+     Player(wchar_t c) : Entity(c) {}
 
-     void SetPosition(int, int);
-     int* GetPosition();
-
-     void MovePlayer(int, int);
+     virtual void MoveEntity(int, int);
 };
 #endif

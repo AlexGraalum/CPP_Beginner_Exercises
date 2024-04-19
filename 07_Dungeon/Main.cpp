@@ -5,6 +5,12 @@
 
 #include "Game.h"
 
+//Define
+#define WIDTH 10
+#define HEIGHT 10
+#define TRAPCOUNT 4
+#define ENEMYCOUNT 2
+
 //Prototypes
 void initSettings();
 
@@ -12,7 +18,7 @@ void initSettings();
 int main(int argc, char** argv) {
      initSettings();
 
-     Game* game = new Game(10, 10, 4);
+     Game* game = new Game(WIDTH, HEIGHT, TRAPCOUNT, ENEMYCOUNT);
      do{
         game->Tick();
      }while(!game->GetEndState());

@@ -6,10 +6,13 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <vector>
 
+#include "Entity.h"
 #include "Player.h"
 #include "Treasure.h"
-#include "Traps.h"
+#include "Trap.h"
+#include "Enemy.h"
 #include "Dungeon.h"
 
 #define KEY_UP 72
@@ -19,29 +22,29 @@
 #define KEY_ESC 27
 #define KEY_SPC 32
 
-//#define DEBUG
+#define PLAYER L'\x263A'
+#define TREASURE L'\x2663'
+#define TRAP L'\x203C'
+#define ENEMY L'\x263B'
 
 class Game {
 private:
-     Player* player;
-     Treasure* treasure;
-     Traps* traps;
+     std::vector<Entity*>* entities;
      Dungeon* dungeon;
 
      bool endState;
 public:
-     Game(int, int, int);
+     Game(int, int, int, int);
      ~Game();
 
+     void PlaceEntities(int, int);
+
      void Tick();
-     void GetKeyInput(int);
      bool WinOrLose();
+     void GetKeyInput(int);
+     void MoveEnemies();
 
      void SetEndState(bool);
      bool GetEndState();
-
-#ifdef DEBUG
-     void PrintDebug();
-#endif
 };
 #endif

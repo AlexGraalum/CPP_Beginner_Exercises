@@ -6,55 +6,57 @@
 //Create new traps
 //Create a new dungeon
 //Set endstate
-Game::Game(int width, int height, int trapCount) {
+Game::Game(int width, int height, int trapCount, int enemyCount) {
      srand(time(NULL));
 
-#ifdef DEBUG
-     std::wcout << "Creating Player\n";
-#endif
+     entities = new std::vector<Entity*>();
 
-     player = new Player();
-     player->SetPosition(rand()%width, rand()%height);
+     entities->emplace_back(new Player(PLAYER));
+     entities->emplace_back(new Treasure(TREASURE));
+     for (int i = 0; i < trapCount; i++) {
+          entities->emplace_back(new Trap(TRAP));
+     }
+     for (int i = 0; i < enemyCount; i++) {
+          entities->emplace_back(new Enemy(ENEMY));
+     }
 
-#ifdef DEBUG
-     int* pPos = player->GetPosition();
-     std::wcout << "Player Created at POS [" << pPos[0] << ", " << pPos[1] << "]\nCreating Treasure\n";
-#endif
+     PlaceEntities(width, height);
 
-     treasure = new Treasure();
-     treasure->PlaceTreasure(width, height, player->GetPosition());
-
-#ifdef DEBUG
-     int* tPos = treasure->GetPosition();
-     std::wcout << "Treasure Created at POS [" << tPos[0] << ", " << tPos[1] << "]\nCreating Traps\n";
-#endif
-
-     traps = new Traps(trapCount);
-     traps->PlaceTraps(width, height, player->GetPosition(), treasure->GetPosition());
-
-#ifdef DEBUG
-     std::wcout << "Traps Placed\nCreating Dungeon\n";
-#endif
-
-     dungeon = new Dungeon(width, height, treasure->GetPosition(), traps);
-
-#ifdef DEBUG
-     std::wcout << "Dungeon Created\n";
-#endif
+     dungeon = new Dungeon(width, height, entities);
 
      this->endState = false;
 }
 
 ////Clear Game
-//Delete player
-//Delete treasure
-//Delete traps
+//Delete entities
 //Delete dungeon
 Game::~Game() {
-     delete player;
-     delete treasure;
-     delete traps;
+     for (auto e : *entities) {
+          delete e;
+     }
+     delete entities;
      delete dungeon;
+}
+
+void Game::PlaceEntities(int width, int height) {
+     //Place Player
+     ((*entities)[0])->SetPosition(rand()%width, rand()%height);
+
+     //Place Other Entities
+     for (int i = 1; i < entities->size(); ) {
+          int x = rand() % width;
+          int y = rand() % height;
+          bool collide = false;
+
+          for (int j = 0; j < i; j++) {
+               if (x == ((*entities)[j])->GetPosition()[0] && y == ((*entities)[j])->GetPosition()[1]) collide = true;
+          }
+
+          if (!collide) {
+               (*entities)[i]->SetPosition(x, y);
+               i++;
+          }
+     }
 }
 
 ////Tick
@@ -64,11 +66,8 @@ Game::~Game() {
 void Game::Tick() {
      system("CLS");
 
-     dungeon->PrintDungeon(player->GetPosition());
+     dungeon->PrintDungeon((*entities)[0]);
 
-#ifdef DEBUG
-     PrintDebug();
-#endif
      if (WinOrLose()) {
           SetEndState(true);
           return;
@@ -80,29 +79,46 @@ void Game::Tick() {
           return;
      }
      GetKeyInput(c);
+     //MoveEnemies();
+}
+
+bool Game::WinOrLose() {
+     for (int i = 1; i < entities->size(); i++) {
+          if ((*entities)[0]->CheckCollision((*entities)[i])) {
+               if (dynamic_cast<Treasure*>((*entities)[i]) != nullptr) {
+                    std::wcout << "You found the treasure!\nGood job!!\n\n";
+                    return true;
+               }
+               if (dynamic_cast<Trap*>((*entities)[i]) != nullptr) {
+                    std::wcout << "A trap got you!\nThat's not good...\n\n";
+                    return true;
+               }
+          }
+     }
+     return false;
 }
 
 ////Get Key Input
 //Check for arrow key code to avoid double input
 //Move player based on key input
 void Game::GetKeyInput(int c) {
-     int* playerPos = player->GetPosition();
+     int* playerPos = (*entities)[0]->GetPosition();
      int* dungeonSize = dungeon->GetSize();
 
      if (c == 224) {
           c = _getch();
           switch (c) {
           case KEY_UP:
-               if (playerPos[1] > 0) player->MovePlayer(0, -1);
+               if (playerPos[1] > 0) (*entities)[0]->MoveEntity(0, -1);
                break;
           case KEY_DOWN:
-               if (playerPos[1] < (dungeonSize[1] - 1)) player->MovePlayer(0, 1);
+               if (playerPos[1] < (dungeonSize[1] - 1)) (*entities)[0]->MoveEntity(0, 1);
                break;
           case KEY_LEFT:
-               if (playerPos[0] > 0) player->MovePlayer(-1, 0);
+               if (playerPos[0] > 0) (*entities)[0]->MoveEntity(-1, 0);
                break;
           case KEY_RIGHT:
-               if (playerPos[0] < (dungeonSize[0] - 1)) player->MovePlayer(1, 0);
+               if (playerPos[0] < (dungeonSize[0] - 1)) (*entities)[0]->MoveEntity(1, 0);
                break;
           default:
                break;
@@ -110,23 +126,53 @@ void Game::GetKeyInput(int c) {
      }
 }
 
-bool Game::WinOrLose() {
-     int* playerPos = player->GetPosition();
-     int* treasurePos = treasure->GetPosition();
-     int** trapList = traps->GetTraps();
+void Game::MoveEnemies() {
+     int* dungeonSize = dungeon->GetSize();
+     for (int i = 1; i < entities->size(); i++) {
+          if (dynamic_cast<Enemy*>((*entities)[i]) != nullptr) {
+               bool moved = true;
 
-     if (playerPos[0] == treasurePos[0] && playerPos[1] == treasurePos[1]) {
-          std::wcout << "You found the treasure!\nGood job!!\n\n";
-          return true;
-     }
+               int newX;
+               int newY;
+               do{
+                    int dir = rand() % 4;
+                    newX = (*entities)[i]->GetPosition()[0];
+                    newY = (*entities)[i]->GetPosition()[1];
 
-     for (int i = 0; i < traps->GetTrapCount(); i++) {
-          if (playerPos[0] == trapList[i][0] && playerPos[1] == trapList[i][1]) {
-               std::wcout << "A trap got you!\nThat's not good...\n\n";
-               return true;
+                    switch (dir) {
+                    case 0:
+                         newY--;
+                         break;
+                    case 1:
+                         newY++;
+                         break;
+                    case 2:
+                         newX--;
+                         break;
+                    case 3:
+                         newX++;
+                         break;
+                    default:
+                         break;
+                    }
+
+                    for (int j = 0; j < entities->size(); j++) {
+                         if ((newX > 0 && newX < (dungeonSize[0] - 1)) &&
+                              (newY > 0 && newY < (dungeonSize[1] - 1)) &&
+                              (*entities)[i] != (*entities)[j]) {
+
+                              if ((*entities)[i]->CheckCollision((*entities)[j])) {
+                                   if (dynamic_cast<Player*>((*entities)[j]) != nullptr) {
+                                        moved = true;
+                                   }
+                                   break;
+                              }
+                         }
+                    }
+               } while (!moved);
+               (*entities)[i]->SetPosition(newX, newY);
           }
      }
-     return false;
 }
 
 ////Set EndState (Helper Function)
@@ -140,19 +186,3 @@ void Game::SetEndState(bool endState) {
 bool Game::GetEndState() {
      return this->endState;
 }
-
-////Print Debug
-//Print debug info
-#ifdef DEBUG
-void Game::PrintDebug() {
-     int* playerPos = this->player->GetPosition();
-     int* treasurePos = this->treasure->GetPosition();
-     int** trapList = this->traps->GetTraps();
-
-     std::wcout << "Player   x: " << playerPos[0] << "\ty: " << playerPos[1] << std::endl;
-     std::wcout << "Treasure x: " << treasurePos[0] << "\ty: " << treasurePos[1] << std::endl;
-     for (int i = 0; i < this->traps->GetTrapCount(); i++) {
-          std::wcout << "Trap   i: " << i << "\tx: " << trapList[i][0] << "\ty: " << trapList[i][1] << std::endl;
-     }
-}
-#endif

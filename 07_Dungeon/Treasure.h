@@ -2,18 +2,10 @@
 #ifndef TREASURE_H
 #define TREASURE_H
 
-#include <stdlib.h>
+#include "Entity.h"
 
-class Treasure {
-private:
-     int* position;
+class Treasure: public Entity {
 public:
-     Treasure();
-     ~Treasure();
-
-     void PlaceTreasure(int, int, int*);
-
-     void SetPosition(int, int);
-     int* GetPosition();
+     Treasure(wchar_t c) : Entity(c) {}
 };
 #endif
