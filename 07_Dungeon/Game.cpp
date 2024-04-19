@@ -4,6 +4,7 @@
 //Create a new player
 //Create a new treasure
 //Create new traps
+//Create new enemies
 //Create a new dungeon
 //Set endstate
 Game::Game(int width, int height, int trapCount, int enemyCount) {
@@ -22,7 +23,7 @@ Game::Game(int width, int height, int trapCount, int enemyCount) {
 
      PlaceEntities(width, height);
 
-     dungeon = new Dungeon(width, height, entities);
+     dungeon = new Dungeon(width, height);
 
      this->endState = false;
 }
@@ -38,18 +39,16 @@ Game::~Game() {
      delete dungeon;
 }
 
+////Place Entities
+//Place all entities at random positions
 void Game::PlaceEntities(int width, int height) {
-     //Place Player
-     ((*entities)[0])->SetPosition(rand()%width, rand()%height);
-
-     //Place Other Entities
-     for (int i = 1; i < entities->size(); ) {
+     for (int i = 0; i < entities->size(); ) {
           int x = rand() % width;
           int y = rand() % height;
           bool collide = false;
 
           for (int j = 0; j < i; j++) {
-               if (x == ((*entities)[j])->GetPosition()[0] && y == ((*entities)[j])->GetPosition()[1]) collide = true;
+               if ((*entities)[j]->CheckCollision(x,y)) collide = true;
           }
 
           if (!collide) {
@@ -66,7 +65,7 @@ void Game::PlaceEntities(int width, int height) {
 void Game::Tick() {
      system("CLS");
 
-     dungeon->PrintDungeon((*entities)[0]);
+     dungeon->PrintDungeon(entities);
 
      if (WinOrLose()) {
           SetEndState(true);
@@ -79,9 +78,11 @@ void Game::Tick() {
           return;
      }
      GetKeyInput(c);
-     //MoveEnemies();
+     MoveEnemies();
 }
 
+////Win Or Lose
+//
 bool Game::WinOrLose() {
      for (int i = 1; i < entities->size(); i++) {
           if ((*entities)[0]->CheckCollision((*entities)[i])) {
@@ -91,6 +92,10 @@ bool Game::WinOrLose() {
                }
                if (dynamic_cast<Trap*>((*entities)[i]) != nullptr) {
                     std::wcout << "A trap got you!\nThat's not good...\n\n";
+                    return true;
+               }
+               if (dynamic_cast<Enemy*>((*entities)[i]) != nullptr) {
+                    std::wcout << "You got caught by an enemy!\nBetter luck next time...\n\n";
                     return true;
                }
           }
@@ -126,20 +131,20 @@ void Game::GetKeyInput(int c) {
      }
 }
 
+////Move Enemies
+//
 void Game::MoveEnemies() {
-     int* dungeonSize = dungeon->GetSize();
      for (int i = 1; i < entities->size(); i++) {
           if (dynamic_cast<Enemy*>((*entities)[i]) != nullptr) {
-               bool moved = true;
+               int newX, newY;
+               bool moved;
 
-               int newX;
-               int newY;
-               do{
-                    int dir = rand() % 4;
+               do {
+                    moved = true;
                     newX = (*entities)[i]->GetPosition()[0];
                     newY = (*entities)[i]->GetPosition()[1];
 
-                    switch (dir) {
+                    switch (rand() % 4) {
                     case 0:
                          newY--;
                          break;
@@ -156,18 +161,19 @@ void Game::MoveEnemies() {
                          break;
                     }
 
-                    for (int j = 0; j < entities->size(); j++) {
-                         if ((newX > 0 && newX < (dungeonSize[0] - 1)) &&
-                              (newY > 0 && newY < (dungeonSize[1] - 1)) &&
-                              (*entities)[i] != (*entities)[j]) {
-
-                              if ((*entities)[i]->CheckCollision((*entities)[j])) {
-                                   if (dynamic_cast<Player*>((*entities)[j]) != nullptr) {
-                                        moved = true;
+                    if ((newX > 0 && newX < (dungeon->GetSize()[0] - 1)) &&
+                         (newY > 0 && newY < (dungeon->GetSize()[1] - 1))) {
+                         for (int j = 0; j < entities->size(); j++) {
+                              if ((*entities)[i] != (*entities)[j] &&
+                                   (*entities)[j]->CheckCollision(newX, newY)) {
+                                   if (dynamic_cast<Player*>((*entities)[j]) == nullptr) {
+                                        moved = false;
                                    }
-                                   break;
                               }
                          }
+                    }
+                    else {
+                         moved = false;
                     }
                } while (!moved);
                (*entities)[i]->SetPosition(newX, newY);

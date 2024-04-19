@@ -8,8 +8,8 @@
 //Define
 #define WIDTH 10
 #define HEIGHT 10
-#define TRAPCOUNT 4
-#define ENEMYCOUNT 2
+#define TRAPCOUNT 16
+#define ENEMYCOUNT 4
 
 //Prototypes
 void initSettings();

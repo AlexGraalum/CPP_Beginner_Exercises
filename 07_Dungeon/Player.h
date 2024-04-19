@@ -8,6 +8,6 @@ class Player: public Entity {
 public:
      Player(wchar_t c) : Entity(c) {}
 
-     virtual void MoveEntity(int, int);
+     void MoveEntity(int, int);
 };
 #endif

@@ -17,13 +17,13 @@ Entity::~Entity() {
      delete this->symbol;
 }
 
-void Entity::MoveEntity(int dirX, int dirY) {
-
-}
-
 bool Entity::CheckCollision(Entity* entity) {
      if (entity->GetPosition()[0] == this->position[0] &&
           entity->GetPosition()[1] == this->position[1]) return true;
+     return false;
+}
+bool Entity::CheckCollision(int x, int y) {
+     if (x == this->position[0] && y == this->position[1]) return true;
      return false;
 }
 

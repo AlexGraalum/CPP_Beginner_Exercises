@@ -10,9 +10,10 @@ public:
      Entity(wchar_t);
      ~Entity();
 
-     virtual void MoveEntity(int, int);
+     virtual void MoveEntity(int, int) {}
 
      bool CheckCollision(Entity*);
+     bool CheckCollision(int, int);
 
      void SetPosition(int, int);
      int* GetPosition();

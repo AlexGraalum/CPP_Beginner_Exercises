@@ -30,6 +30,7 @@
 class Game {
 private:
      std::vector<Entity*>* entities;
+
      Dungeon* dungeon;
 
      bool endState;

@@ -13,7 +13,7 @@ CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 | 4. | Pancake Glutton | Complete |
 | 5. | Bracketing Search | Complete |
 | 6. | Tic Tac Toe | Complete |
-| 7. | Dungeon Crawl | In Progress |
+| 7. | Dungeon Crawl | Complete |
 | 8. | Fun With Functions | Planned |
 | 9. | Strings Will Betray You | Planned |
 | 10. | Graduation | Planned |

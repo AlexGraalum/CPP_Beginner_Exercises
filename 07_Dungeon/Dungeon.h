@@ -15,19 +15,15 @@
 #define BR L'\x255D'
 
 #define FLOOR L'\x2592'
-//#define PLAYER L'\x263A'
-//#define TREASURE L'\x2663'
-//#define TRAP L'\x203C'
 
 class Dungeon {
 private:
-     wchar_t** dungeon;
      int* size;
 public:
-     Dungeon(int, int, std::vector<Entity*>*);
+     Dungeon(int, int);
      ~Dungeon();
 
-     void PrintDungeon(Entity*);
+     void PrintDungeon(std::vector<Entity*>*);
 
      int* GetSize();
 };
