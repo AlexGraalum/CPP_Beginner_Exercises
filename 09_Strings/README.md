@@ -16,7 +16,7 @@ Requires:
 
 ---
 
-- [ ] Write a program that asks the user for a first name and last name separately\
+- [x] Write a program that asks the user for a first name and last name separately\
 The program must then store the user full name inside a single string and output that string.\
 i.e.\
 Input:\
