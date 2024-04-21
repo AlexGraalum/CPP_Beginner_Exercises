@@ -3,6 +3,8 @@
 #include <string>
 
 //Prototypes
+void zName(std::string);
+void reverseName(std::string);
 
 //Functions
 int main(int argc, char** argv) {
@@ -15,21 +17,40 @@ int main(int argc, char** argv) {
 
      fullName = firstName + " " + lastName;
 
-     for (int i = 0; i < fullName.length(); i++) {
-          switch (fullName[i]) {
+     zName(fullName);
+     reverseName(fullName);
+
+     return 0;
+}
+
+////Z-Name
+//Replace all vowels with z
+void zName(std::string str) {
+     for (int i = 0; i < str.length(); i++) {
+          switch (str[i]) {
           case 'a':
           case 'e':
           case 'i':
           case 'o':
           case 'u':
-               fullName[i] = 'z';
+               str[i] = 'z';
                break;
           default:
                break;
           }
      }
 
-     std::cout << fullName << std::endl;
+     std::cout << str << std::endl;
+}
 
-     return 0;
+////Reverse Name
+//Reverse all characters in the string
+void reverseName(std::string str) {
+     for (long i = 0; i < str.length() / 2; i++) {
+          char temp = str[i];
+          str[i] = str[str.length() - (i + 1)];
+          str[str.length() - (i + 1)] = temp;
+     }
+
+     std::cout << str << std::endl;
 }

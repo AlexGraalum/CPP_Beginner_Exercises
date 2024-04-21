@@ -29,6 +29,6 @@ John Smith
 i.e.\
 John Smith -> Jzhn Smzth
 
-- [ ] **X X** Modify the program so that it reverses the users name.\
+- [x] **X X** Modify the program so that it reverses the users name.\
 i.e.\
 John Smith -> htimS nhoJ
