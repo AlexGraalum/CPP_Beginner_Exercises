@@ -14,7 +14,7 @@ Requires:
 
 ---
 
-- [ ] Write a function titled say_hello() that outputs "Hello" to the screen.
+- [x] Write a function titled say_hello() that outputs "Hello" to the screen.
 
 - [ ] **X** Modify the function so that it takes an integer argument and outputs "Hello" as many times as the value passed to it.
 
