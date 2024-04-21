@@ -16,9 +16,9 @@ Requires:
 
 - [x] Write a function titled say_hello() that outputs "Hello" to the screen.
 
-- [ ] **X** Modify the function so that it takes an integer argument and outputs "Hello" as many times as the value passed to it.
+- [x] **X** Modify the function so that it takes an integer argument and outputs "Hello" as many times as the value passed to it.
 
-- [ ] **X X** Make another function that takes two integer arguments and returns the product of both passed values.\
+- [x] **X X** Make another function that takes two integer arguments and returns the product of both passed values.\
 (i.e., integer1: 4, integer2: 5, returns: 20)
 
 - [ ] **X X X** Make a function called half() that takes an integer argument.\
