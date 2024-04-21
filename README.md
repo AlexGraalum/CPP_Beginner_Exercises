@@ -14,7 +14,7 @@ CPP Practice Exercises located at https://cplusplus.com/articles/N6vU7k9E/
 | 5. | Bracketing Search | Complete |
 | 6. | Tic Tac Toe | Complete |
 | 7. | Dungeon Crawl | Complete (Future Development Planned) |
-| 8. | Fun With Functions | In Progress |
+| 8. | Fun With Functions | Complete |
 | 9. | Strings Will Betray You | Planned |
 | 10. | Graduation | Planned |
 

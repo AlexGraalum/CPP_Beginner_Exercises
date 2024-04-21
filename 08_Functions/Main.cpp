@@ -4,6 +4,7 @@
 //Prototypes
 void say_hello(int);
 int product(int, int);
+void half(int);
 
 //Functions
 int main(int argc, char** argv) {
@@ -15,6 +16,10 @@ int main(int argc, char** argv) {
      std::cout << "Give me two numbers: ";
      std::cin >> x >> y;
      std::cout << x << " * " << y << " = " << product(x, y) << std::endl;
+
+     std::cout << "Give me one more number: ";
+     std::cin >> x;
+     half(x);
 
      return 0;
 }
@@ -29,4 +34,10 @@ void say_hello(int x) {
 
 int product(int x, int y) {
      return x * y;
+}
+
+void half(int x) {
+     std::cout << x << std::endl;
+     x /= 2;
+     if (x > 0) half(x);
 }

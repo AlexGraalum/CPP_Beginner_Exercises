@@ -21,7 +21,7 @@ Requires:
 - [x] **X X** Make another function that takes two integer arguments and returns the product of both passed values.\
 (i.e., integer1: 4, integer2: 5, returns: 20)
 
-- [ ] **X X X** Make a function called half() that takes an integer argument.\
+- [x] **X X X** Make a function called half() that takes an integer argument.\
 The function must print the number passed to the screen, then divide that number by two.\
 If the new number is greater than zero, the function will call itself and pass the new number.\
 If the numer is zero or less, the function will exit.\
