@@ -1,12 +1,21 @@
+//Includes
 #include <iostream>
 
-void say_hello();
+//Prototypes
+void say_hello(int);
 
+//Functions
 int main(int argc, char** argv) {
-     say_hello();
+     int x;
+     std::cout << "Give me a number: ";
+     std::cin >> x;
+     say_hello(x);
      return 0;
 }
 
-void say_hello() {
-     std::cout << "Hello";
+////Say Hello
+//Print "Hello" x amount of times
+void say_hello(int x) {
+     for (int i = 0; i < x; i++)
+          std::cout << "Hello";
 }
