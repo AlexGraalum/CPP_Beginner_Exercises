@@ -25,7 +25,7 @@ Smith\
 Output:\
 John Smith
 
-- [ ] **X** Modify the program so that it replaces every vowel (a,e,i,o,u) with the letter z.\
+- [x] **X** Modify the program so that it replaces every vowel (a,e,i,o,u) with the letter z.\
 i.e.\
 John Smith -> Jzhn Smzth
 
