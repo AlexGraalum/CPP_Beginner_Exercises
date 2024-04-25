@@ -1,13 +1,16 @@
+#pragma once
 #ifndef BUNNY_H
 #define BUNNY_H
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <stdlib.h>
 
-const std::string MALE_FILE = "resources/Male_Names.txt";
-const std::string FEMALE_FILE = "resources/Female_Names.txt";
+const std::string MALE_FILE = "Resources/Male_Names.txt";
+const std::string FEMALE_FILE = "Resources/Female_Names.txt";
+const std::string LASTNAME_FILE = "Resources/Last_Names.txt";
 
 enum class Sex {MALE, FEMALE};
 enum class Color {WHITE, BROWN, BLACK, SPOTTED};
@@ -24,11 +27,10 @@ private:
 public:
      Bunny();
      Bunny(Color);
-     ~Bunny();
+     ~Bunny() {}
 
-     void PrintInfo();
-
-     friend std::ostream& operator<<(std::ostream& out, const Bunny& bunny);
+     std::string GetInfo(size_t);
+     bool CanBreed();
 
      Sex GetSex() { return this->sex; }
      void SetSex(Sex sex) { this->sex = sex; }
@@ -36,7 +38,7 @@ public:
      void SetFur(Color fur) { this->fur = fur; }
      int GetAge() { return this->age; }
      void SetAge(int age) { this->age = age; }
-     std::string GetName() { return this->name; }
+     std::string GetName();
      void SetName(std::string name) { this->name = name; }
      bool GetRadioactive() { return this->radioactive; }
      void SetRadioactive(bool radioactive) { this->radioactive = radioactive; }

@@ -19,8 +19,6 @@ Bunny::Bunny() {
      age = 0;
      name = GetRandomName(this->sex);
      radioactive = (rand() % 101) > 97 ? true : false;
-
-     std::cout << *this << " was born!\n";
 }
 
 Bunny::Bunny(Color momFur) {
@@ -29,63 +27,98 @@ Bunny::Bunny(Color momFur) {
      age = 0;
      name = GetRandomName(this->sex);
      radioactive = (rand() % 101) > 97 ? true : false;
-
-     std::cout << *this << " was born!\n";
-}
-
-Bunny::~Bunny() {
-     std::cout << *this << " has died!\n";
 }
 
 std::string Bunny::GetRandomName(Sex sex) {
-     std::ifstream file((sex == Sex::MALE) ? MALE_FILE : FEMALE_FILE);
-     int lineCount = 0;
-     std::string line;
-     while (std::getline(file, line))
-          lineCount++;
-     file.clear();
-     file.seekg(0);
+     std::ifstream firstNameFile((sex == Sex::MALE) ? MALE_FILE : FEMALE_FILE);
+     std::ifstream lastNameFile(LASTNAME_FILE);
 
-     int r = rand() % lineCount;
+     int firstNameFileCount = 0;
+     int lastNameFileCount = 0;
+     std::string firstName, lastName;
+
+     while (std::getline(firstNameFile, firstName))
+          firstNameFileCount++;
+     while (std::getline(lastNameFile, lastName))
+          lastNameFileCount++;
+
+     firstNameFile.clear();
+     firstNameFile.seekg(0);
+     lastNameFile.clear();
+     lastNameFile.seekg(0);
+
+     int r = rand() % firstNameFileCount;
      int i = 0;
-     while (std::getline(file, line)) {
+     while (std::getline(firstNameFile, firstName)) {
           ++i;
-          if (i == r) {
-               break;
-          }
+          if (i == r) break;
      }
-     return line;
+
+     r = rand() % lastNameFileCount;
+     i = 0;
+     while (std::getline(lastNameFile, lastName)) {
+          ++i;
+          if (i == r) break;
+     }
+
+     firstNameFile.close();
+     lastNameFile.close();
+
+     return firstName + " " + lastName;
 }
 
-void Bunny::PrintInfo() {
-     std::cout << "Name: " << this->name << std::endl;
-     std::cout << "\tSex: " << ((this->sex == Sex::MALE) ? "M" : "F");
-     std::cout << "\tAge: " << this->age << std::endl;
-     std::cout << "\tFur: ";
-     switch (this->fur) {
-     case Color::WHITE:
-          std::cout << "White\n";
-          break;
-     case Color::BROWN:
-          std::cout << "Brown\n";
-          break;
-     case Color::BLACK:
-          std::cout << "Black\n";
+std::string Bunny::GetInfo(size_t nameBuffer) {
+     std::string info = "";
+     int digits = 1, tempAge = age;
+     while (tempAge >= 10) {
+          tempAge /= 10;
+          digits += 1;
+     }
+
+     info.append(this->GetName());
+     info.append(nameBuffer - info.length() + 3 - digits, ' ');
+     info.append(std::to_string(this->age)).append(" [");
+     switch (this->sex) {
+     case Sex::MALE:
+          info.append("M] -- ");
           break;
      default:
-          std::cout << "Spotted\n";
+          info.append("F] -- ");
           break;
      }
-     std::cout << "Radioactive Vampire Mutant: " << ((this->radioactive) ? "Yes\n" : "No\n");
+
+     switch (this->fur) {
+     case Color::WHITE:
+          info.append("White");
+          break;
+     case Color::BROWN:
+          info.append("Brown");
+          break;
+     case Color::BLACK:
+          info.append("Black");
+          break;
+     default:
+          info.append("Spotted");
+          break;
+     }
+
+     return info;
 }
 
-std::ostream& operator<<(std::ostream& out, const Bunny& bunny) {
-     if (bunny.radioactive) {
-          out << "Radioactive Mutant Vampie Bunny ";
+bool Bunny::CanBreed() {
+     if (radioactive) return false;
+     if (age < 2) return false;
+     return true;
+}
+
+std::string Bunny::GetName() {
+     std::string str = "";
+     if (this->radioactive) {
+          str.append("Radioactive Mutant Vampire Bunny ");
      }
      else {
-          out << "Bunny ";
+          str.append("Bunny ");
      }
-     out << bunny.name;
-     return out;
+     str.append(this->name);
+     return str;
 }

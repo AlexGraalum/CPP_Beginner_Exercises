@@ -1,19 +1,33 @@
+#pragma once
 #ifndef BUNNY_LIST_H
 #define BUNNY_LIST_H
 
 #include "Bunny.h"
+#include "Logger.h"
+#include <vector>
+
+#define CULL_COUNT 1000
+//#define DEBUG
 
 struct Node {
      Bunny* bunny;
      Node* next;
+     ~Node() {
+          delete bunny;
+     }
 };
 
 class BunnyList {
 private:
      Node* head;
      int pop;
+     size_t nameBuffer;
+
+     Logger* logger;
+
+     void CullBunnies();
 public:
-     BunnyList(int);
+     BunnyList(int, Logger*);
      ~BunnyList();
 
      void AddBunny(Bunny*);
@@ -21,9 +35,8 @@ public:
 
      void PrintBunnies();
      void AgeBunnies();
-     void BreedBunnies();
-     void TurnBunnies();
-     void CullBunnies();
+     bool BreedBunnies();
+     bool TurnBunnies();
 
      bool BunniesExist();
 

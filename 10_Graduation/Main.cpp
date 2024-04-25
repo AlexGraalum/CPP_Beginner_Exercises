@@ -3,8 +3,10 @@
 #include <conio.h>
 #include <vector>
 #include <time.h>
+#include <string>
 
 #include "BunnyList.h"
+#include "Logger.h"
 
 //Defines
 #define START_BUN 5
@@ -13,22 +15,39 @@
 int main(int argc, char** argv) {
      srand(time(NULL));
 
-     int year = 1;
-     BunnyList* bunnies = new BunnyList(START_BUN);
+     int year = 0;
+     Logger* logger = new Logger("testFile.txt");
+     std::string header;
+     BunnyList* bunnies = new BunnyList(START_BUN, logger);
+     logger->AddToLog("");
+     
      do{
-          
-          std::cout << "--Year: " << year << " || Population: " << bunnies->GetPopulation() << "--\n";
+          if (bunnies->TurnBunnies())
+               logger->AddToLog("");
+          if (bunnies->BreedBunnies())
+               logger->AddToLog("");
+
+          header = std::string("--Year: ").append(std::to_string(year)).append(" || Population: ");
+          header.append(std::to_string(bunnies->GetPopulation())).append("--\n");
+          logger->AddToLogFront(header);
+
           bunnies->PrintBunnies();
-          
+          logger->LogOut();
+
           _getch();
           system("CLS");
+
           bunnies->AgeBunnies();
-          bunnies->TurnBunnies();
-          bunnies->BreedBunnies();
-          if (bunnies->GetPopulation() > 1000) bunnies->CullBunnies();
           year++;
+
+          //logger->LogOut();
      } while (bunnies->BunniesExist());
+
+     logger->AddToLog("The bunny population has been decemated.");
+     logger->LogOut();
+
      delete bunnies;
+     delete logger;
 
      return 0;
 }
