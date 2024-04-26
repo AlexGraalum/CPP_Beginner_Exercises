@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include <vector>
 
-#define CULL_COUNT 1000
+#define CULL_COUNT 100
 //#define DEBUG
 
 struct Node {

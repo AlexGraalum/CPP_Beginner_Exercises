@@ -5,6 +5,9 @@
 #include <time.h>
 #include <string>
 
+#include <chrono>
+#include <thread>
+
 #include "BunnyList.h"
 #include "Logger.h"
 
@@ -43,6 +46,7 @@ int main(int argc, char** argv) {
           //logger->LogOut();
      } while (bunnies->BunniesExist());
 
+     logger->AddToLogFront(std::string("--Year: ").append(std::to_string(year)).append(" || Population: ").append(std::to_string(bunnies->GetPopulation())));
      logger->AddToLog("The bunny population has been decemated.");
      logger->LogOut();
 
