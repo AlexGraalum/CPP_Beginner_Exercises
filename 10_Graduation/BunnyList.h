@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include <vector>
 
-#define CULL_COUNT 100
+#define POPULATION_LIMIT 1000
 //#define DEBUG
 
 struct Node {
@@ -39,6 +39,7 @@ public:
      bool TurnBunnies();
 
      bool BunniesExist();
+     bool IsDeathCascade();
 
      int GetPopulation() { return this->pop; }
 };

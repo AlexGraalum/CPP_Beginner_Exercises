@@ -86,7 +86,7 @@ Rules:
 - When all bunnies have died, the program ends
 
 
-- [ ] **X** Modify the program to run in real time, each turn lasting 2 seconds and 1 second pause between annoncements
+- [x] **X** Modify the program to run in real time, each turn lasting 2 seconds and 1 second pause between announcements
 
 - [ ] **X X** Allow the user to press the 'K' key to initiate a mass rabbit cull, randomly killing half the population
 

@@ -9,6 +9,9 @@
 //Find the longest possible name
 // for formatting
 BunnyList::BunnyList(int c, Logger* logger) {
+#ifdef DEBUG
+     std::cout << "DEBUG: INITIALIZING BUNNYLIST\n";
+#endif
      head = nullptr;
      pop = 0;
      this->logger = logger;
@@ -40,18 +43,27 @@ BunnyList::BunnyList(int c, Logger* logger) {
      lastNameFile.close();
 
      nameBuffer = 33 + longestFirstName + longestLastName;
+#ifdef DEBUG
+     std::cout << "DEBUG: DONE INITIALIZING BUNNYLIST\n";
+#endif
 }
 
 ////Bunny Destructor
 //  Destroy the BunnyList Object
 //Delete each Node in LinkedList
 BunnyList::~BunnyList() {
+#ifdef DEBUG
+     std::cout << "DEBUG: DELETING BUNNYLIST\n";
+#endif
      while (head) {
           Node* temp = head;
           head = head->next;
           delete temp;
      }
      delete head;
+#ifdef DEBUG
+     std::cout << "DEBUG: DONE DELETING BUNNYLIST\n";
+#endif
 }
 
 ////Add Bunny
@@ -61,13 +73,18 @@ BunnyList::~BunnyList() {
 //Insert new Node to LinkedList
 //Increase population count
 void BunnyList::AddBunny(Bunny* bunny) {
+#ifdef DEBUG
+     std::cout << "DEBUG: ADDING BUNNY NODE\n";
+#endif
      Node* newNode = new Node();
      newNode->bunny = bunny;
-     //logger->AddToLog(bunny->GetName().append(" has been born."));
      
      if (head == nullptr) {
           head = newNode;
           pop++;
+#ifdef DEBUG
+          std::cout << "DEBUG: DONE ADDING BUNNY NODE\n";
+#endif
           return;
      }
 
@@ -75,6 +92,9 @@ void BunnyList::AddBunny(Bunny* bunny) {
      while (temp->next) temp = temp->next;
      temp->next = newNode;
      pop++;
+#ifdef DEBUG
+     std::cout << "DEBUG: DONE ADDING BUNNY NODE\n";
+#endif
 }
 
 ////Kill Bunny
@@ -86,11 +106,13 @@ void BunnyList::AddBunny(Bunny* bunny) {
 //  and delete when Bunny is found
 //Decrease population count
 void BunnyList::KillBunny(Node** listHead, Bunny* bunny) {
+#ifdef DEBUG
+     std::cout << "DEBUG: DELETING BUNNY NODE\n";
+#endif
      Node* temp;
      if ((*listHead)->bunny == bunny) {
           temp = *listHead;
           *listHead = (*listHead)->next;
-          //logger->AddToLog(temp->bunny->GetName().append(" has died."));
           delete temp;
           pop--;
      }
@@ -100,7 +122,6 @@ void BunnyList::KillBunny(Node** listHead, Bunny* bunny) {
                if (curr->next->bunny == bunny) {
                     temp = curr->next;
                     curr->next = curr->next->next;
-                    //logger->AddToLog(temp->bunny->GetName().append(" has died."));
                     delete temp;
                     pop--;
                     break;
@@ -110,6 +131,9 @@ void BunnyList::KillBunny(Node** listHead, Bunny* bunny) {
                }
           }
      }
+#ifdef DEBUG
+     std::cout << "DEBUG: DONE DELETING BUNNY NODE\n";
+#endif
 }
 
 ////Print Bunnies
@@ -127,7 +151,6 @@ void BunnyList::PrintBunnies() {
           temp = temp->next;
      } while (temp);
      logger->AddToLog("");
-
 #ifdef DEBUG
      std::cout << "DEBUG: DONE PRINTING BUNNIES\n";
 #endif
@@ -142,8 +165,8 @@ void BunnyList::AgeBunnies() {
 #ifdef DEBUG
      std::cout << "DEBUG: AGING BUNNIES\n";
 #endif
-
      Node* curr = head;
+
      do{
           if ((curr->bunny->GetRadioactive() && curr->bunny->GetAge() == 50) ||
               (!curr->bunny->GetRadioactive() && curr->bunny->GetAge() == 10)) {
@@ -195,7 +218,7 @@ bool BunnyList::BreedBunnies() {
 
                          AddBunny(tempChild);
                          bred = true;
-                         if (GetPopulation() > CULL_COUNT) {
+                         if (GetPopulation() > POPULATION_LIMIT) {
                               CullBunnies();
 #ifdef DEBUG
                               std::cout << "DEBUG: BUNNY BREEDING RESULTED IN CULLING\n";
@@ -212,7 +235,6 @@ bool BunnyList::BreedBunnies() {
 #ifdef DEBUG
      std::cout << "DEBUG: DONE BREEDING BUNNIES\n";
 #endif
-
      return bred;
 }
 
@@ -231,6 +253,7 @@ bool BunnyList::TurnBunnies() {
      std::vector<Node*> mutants;
      std::vector<Node*> newMutants;
      Node* temp = head;
+
      while (temp) {
           if (temp->bunny->GetRadioactive())
                mutants.push_back(temp);
@@ -244,6 +267,7 @@ bool BunnyList::TurnBunnies() {
                int random = rand() % GetPopulation();
                int i = 0;
                Node* temp = head;
+
                do {
                     if ((temp != m) && 
                          !temp->bunny->GetRadioactive() && 
@@ -315,4 +339,28 @@ void BunnyList::CullBunnies() {
 bool BunnyList::BunniesExist() {
      if (head != NULL) return true;
      return false;
+}
+
+////Is Death Cascde
+//  Are the bunnies on a path of destruction
+//Are all the bunnies mutants?
+//Are all the bunnies the same sex?
+bool BunnyList::IsDeathCascade() {
+     Node* curr = head;
+     Sex sex;
+
+     //All Mutants?
+     while (curr->bunny->GetRadioactive()) curr = curr->next;
+     if (curr == nullptr) return true;
+
+     sex = curr->bunny->GetSex();
+     curr = curr->next;
+
+     while (curr) {
+          if (!curr->bunny->GetRadioactive() && curr->bunny->GetSex() != sex)
+               return false;
+          curr = curr->next;
+     }
+
+     return true;
 }
