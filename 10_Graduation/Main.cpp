@@ -19,6 +19,7 @@
 //Functions
 int main(int argc, char** argv) {
      int year = 0;
+     bool cull = false;
      std::string header;
 
      srand(time(NULL));
@@ -27,12 +28,24 @@ int main(int argc, char** argv) {
 
      logger->AddToLog("");
      do{
+          if (_kbhit()) {
+               int c = _getch();
+               if (c == 'k' || c == 'K')
+                    cull = true;
+          }
+
           auto start_time = std::chrono::high_resolution_clock::now();
-          if (year > 0) bunnies->AgeBunnies();
-          if (bunnies->TurnBunnies())
-               logger->AddToLog("");
-          if (bunnies->BreedBunnies())
-               logger->AddToLog("");
+
+          if (cull) {
+               bunnies->CullBunnies();
+          }
+          else {
+               if (year > 0) bunnies->AgeBunnies();
+               if (bunnies->TurnBunnies())
+                    logger->AddToLog("");
+               if (bunnies->BreedBunnies())
+                    logger->AddToLog("");
+          }
 
           header = std::string("--Year: ").append(std::to_string(year)).append(" || Population: ");
           header.append(std::to_string(bunnies->GetPopulation())).append("--\n");
@@ -48,6 +61,7 @@ int main(int argc, char** argv) {
           logger->LogOut();
           if ((logger->GetSpeedMul() < CASCADE_MUL) && bunnies->IsDeathCascade()) logger->SetSpeedMul(CASCADE_MUL);
 
+          cull = false;
           year++;
      } while (bunnies->BunniesExist());
 

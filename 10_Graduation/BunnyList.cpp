@@ -146,10 +146,10 @@ void BunnyList::PrintBunnies() {
 #endif
      Node* temp = head;
 
-     do{
+     while (temp){
           logger->AddToLog(temp->bunny->GetInfo(nameBuffer));
           temp = temp->next;
-     } while (temp);
+     }
      logger->AddToLog("");
 #ifdef DEBUG
      std::cout << "DEBUG: DONE PRINTING BUNNIES\n";
@@ -179,7 +179,6 @@ void BunnyList::AgeBunnies() {
           else {
                curr->bunny->SetAge(curr->bunny->GetAge() + 1);
                logger->AddToLog(curr->bunny->GetName().append(" is now ").append(std::to_string(curr->bunny->GetAge())).append(" years old."));
-
                curr = curr->next;
           }
      } while (curr && BunniesExist());
@@ -187,6 +186,11 @@ void BunnyList::AgeBunnies() {
 #ifdef DEBUG
      std::cout << "DEBUG: DONE AGING BUNNIES\n";
 #endif
+}
+
+void BunnyList::AgeBunny(Node* bun) {
+     bun->bunny->SetAge(bun->bunny->GetAge() + 1);
+     logger->AddToLog(bun->bunny->GetName().append(" is now ").append(std::to_string(bun->bunny->GetAge())).append(" years old."));
 }
 
 ////Breed Bunnies

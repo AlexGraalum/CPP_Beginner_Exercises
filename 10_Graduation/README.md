@@ -88,7 +88,7 @@ Rules:
 
 - [x] **X** Modify the program to run in real time, each turn lasting 2 seconds and 1 second pause between announcements
 
-- [ ] **X X** Allow the user to press the 'K' key to initiate a mass rabbit cull, randomly killing half the population
+- [x] **X X** Allow the user to press the 'K' key to initiate a mass rabbit cull, randomly killing half the population
 
 - [ ] **X X X X** Modify the program to place the rabbits in an 80x80 grid. Have the rabbits randomly move one space per turn\
 Mark juvenile males as m and adult males as M\

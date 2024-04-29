@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include <vector>
 
-#define POPULATION_LIMIT 1000
+#define POPULATION_LIMIT 50
 //#define DEBUG
 
 struct Node {
@@ -25,7 +25,7 @@ private:
 
      Logger* logger;
 
-     void CullBunnies();
+
 public:
      BunnyList(int, Logger*);
      ~BunnyList();
@@ -35,8 +35,10 @@ public:
 
      void PrintBunnies();
      void AgeBunnies();
+     void AgeBunny(Node*);
      bool BreedBunnies();
      bool TurnBunnies();
+     void CullBunnies();
 
      bool BunniesExist();
      bool IsDeathCascade();
