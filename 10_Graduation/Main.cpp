@@ -5,11 +5,16 @@
 #include <time.h>
 #include <string>
 
-//#include <chrono>
-//#include <thread>
+#include <io.h>
+#include <fcntl.h>
+#include <windows.h>
+
+#include <chrono>
+#include <thread>
 
 #include "BunnyList.h"
 #include "Logger.h"
+//#include "Grid.h"
 
 //Defines
 #define START_BUN 5
@@ -18,6 +23,13 @@
 
 //Functions
 int main(int argc, char** argv) {
+     _setmode(_fileno(stdout), _O_U16TEXT);
+     CONSOLE_FONT_INFOEX cfi;
+     cfi.cbSize = sizeof(cfi);
+     cfi.dwFontSize.X = 0;
+     cfi.dwFontSize.Y = 24;
+     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
      int year = 0;
      bool cull = false;
      std::string header;
@@ -33,9 +45,9 @@ int main(int argc, char** argv) {
                if (c == 'k' || c == 'K')
                     cull = true;
           }
-
+     
           auto start_time = std::chrono::high_resolution_clock::now();
-
+     
           if (cull) {
                bunnies->CullBunnies();
           }
@@ -46,29 +58,29 @@ int main(int argc, char** argv) {
                if (bunnies->BreedBunnies())
                     logger->AddToLog("");
           }
-
+     
           header = std::string("--Year: ").append(std::to_string(year)).append(" || Population: ");
           header.append(std::to_string(bunnies->GetPopulation())).append("--\n");
           logger->AddToLogFront(header);
           bunnies->PrintBunnies();
-
+     
           auto total_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count();
-
+     
           int time_limit = int(TURN_TIME_MS / logger->GetSpeedMul());
           if (total_time < time_limit)
                std::this_thread::sleep_for(std::chrono::milliseconds(time_limit - total_time));
-
+     
           logger->LogOut();
           if ((logger->GetSpeedMul() < CASCADE_MUL) && bunnies->IsDeathCascade()) logger->SetSpeedMul(CASCADE_MUL);
-
+     
           cull = false;
           year++;
      } while (bunnies->BunniesExist());
-
+     
      logger->AddToLogFront(std::string("--Year: ").append(std::to_string(year)).append("--"));
      logger->AddToLog("The bunny population has been decemated.");
      logger->LogOut();
-
+     
      delete bunnies;
      delete logger;
 

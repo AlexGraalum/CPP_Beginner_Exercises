@@ -17,7 +17,8 @@ Dungeon::~Dungeon() {
 ////Print Dungeon
 //Print border around dungeon
 //Print contents of dungeon
-void Dungeon::PrintDungeon(std::vector<Entity*>* entities) {
+void Dungeon::PrintDungeon(std::vector<Entity*> entities) {
+     system("CLS");
      std::wcout << TL;
      for (int i = 0; i < size[0]; i++) std::wcout << H;
      std::wcout << TR << std::endl;
@@ -27,9 +28,9 @@ void Dungeon::PrintDungeon(std::vector<Entity*>* entities) {
           std::wcout << V;
           for (int x = 0; x < size[0]; x++) {
                tile = FLOOR;
-               for (int i = 0; i < entities->size(); i++) {
-                    if ((*entities)[i]->GetPosition()[0] == x && (*entities)[i]->GetPosition()[1] == y) {
-                         tile = (*entities)[i]->GetSymbol();
+               for (int i = 0; i < entities.size(); i++) {
+                    if (entities[i]->GetPosition()[0] == x && entities[i]->GetPosition()[1] == y) {
+                         tile = entities[i]->GetSymbol();
                     }
                }
                std::wcout << tile;

@@ -7,7 +7,5 @@
 class Enemy: public Entity {
 public:
      Enemy(wchar_t c) : Entity(c) {}
-
-     void MoveEntity(int, int);
 };
 #endif

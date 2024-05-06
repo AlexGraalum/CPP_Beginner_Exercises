@@ -6,6 +6,7 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <thread>
 #include <vector>
 
 #include "Entity.h"
@@ -29,7 +30,7 @@
 
 class Game {
 private:
-     std::vector<Entity*>* entities;
+     std::vector<Entity*> entities;
 
      Dungeon* dungeon;
 
@@ -41,6 +42,9 @@ public:
      void PlaceEntities(int, int);
 
      void Tick();
+     bool PlayerTurn();
+     bool CompTurn();
+
      bool WinOrLose();
      void GetKeyInput(int);
      void MoveEnemies();

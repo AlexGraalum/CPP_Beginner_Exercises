@@ -7,7 +7,5 @@
 class Player: public Entity {
 public:
      Player(wchar_t c) : Entity(c) {}
-
-     void MoveEntity(int, int);
 };
 #endif

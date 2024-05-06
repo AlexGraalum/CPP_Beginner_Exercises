@@ -23,7 +23,7 @@ public:
      Dungeon(int, int);
      ~Dungeon();
 
-     void PrintDungeon(std::vector<Entity*>*);
+     void PrintDungeon(std::vector<Entity*>);
 
      int* GetSize();
 };

@@ -17,37 +17,16 @@ Entity::~Entity() {
      delete this->symbol;
 }
 
+void Entity::MoveEntity(int dirX, int dirY) {
+     SetPosition((GetPosition())[0] += dirX, (GetPosition())[1] += dirY);
+}
+
 bool Entity::CheckCollision(Entity* entity) {
-     if (entity->GetPosition()[0] == this->position[0] &&
-          entity->GetPosition()[1] == this->position[1]) return true;
+     if ((entity->GetPosition()[0] == this->position[0]) &&
+          (entity->GetPosition()[1] == this->position[1])) return true;
      return false;
 }
 bool Entity::CheckCollision(int x, int y) {
-     if (x == this->position[0] && y == this->position[1]) return true;
+     if ((x == this->position[0]) && (y == this->position[1])) return true;
      return false;
-}
-
-////Set Position (Helper Function)
-//Set the entity position
-void Entity::SetPosition(int x, int y) {
-     this->position[0] = x;
-     this->position[1] = y;
-}
-
-////Get Position (Helper Function)
-//Get the entity position
-int* Entity::GetPosition() {
-     return this->position;
-}
-
-////Set Symbol (Helper Function)
-//Set the entity symbol
-void Entity::SetSymbol(wchar_t symbol) {
-     *(this->symbol) = symbol;
-}
-
-////Get Symbol (Helper Function)
-//Get the entity symbol
-wchar_t Entity::GetSymbol() {
-     return *(this->symbol);
 }
