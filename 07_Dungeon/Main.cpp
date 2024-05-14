@@ -6,10 +6,10 @@
 #include "Game.h"
 
 //Define
-#define WIDTH 10
+#define WIDTH 20
 #define HEIGHT 10
-#define TRAPCOUNT 16
-#define ENEMYCOUNT 4
+#define TRAPCOUNT 25
+#define ENEMYCOUNT 10
 
 //Prototypes
 void initSettings();

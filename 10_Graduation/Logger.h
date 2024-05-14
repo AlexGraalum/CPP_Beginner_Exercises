@@ -10,6 +10,8 @@
 #include <chrono>
 #include <thread>
 
+#include <windows.h>
+
 #define LOG_TIME_MS 1000
 
 class Logger {
@@ -17,6 +19,7 @@ private:
      std::fstream file;
      std::vector<std::string> logBuffer;
      float speedMul;
+     HANDLE h;
 public:
      Logger();
      Logger(std::string);

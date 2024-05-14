@@ -146,8 +146,6 @@ void Game::MoveEnemies() {
                int currY = entities[e]->GetPosition()[1];
                bool moved;
 
-               std::wcout << "DEBUG MOVING ENTITY[" << currX << "][" << currY << "]\n";
-
                do {
                     moved = true;
                     newX = 0;

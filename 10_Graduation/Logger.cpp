@@ -8,6 +8,8 @@ Logger::Logger() {
      localtime_s(&curr_tm, &curr_time);
      strftime(timeString, 25, "%Y_%m_%d-%H_%M_%S.txt", &curr_tm);
 
+     h = GetStdHandle(STD_OUTPUT_HANDLE);
+
      this->file = std::fstream(std::string(timeString), std::ios::out);
      this->speedMul = 1.0;
 }
@@ -31,7 +33,12 @@ void Logger::AddToLogFront(std::string str) {
 
 void Logger::LogOut() {
      for (auto& l : logBuffer) {
-          std::cout << l << std::endl;
+          if (l.find("Radioactive") != std::string::npos) SetConsoleTextAttribute(h, 12);
+          std::cout << l;
+          SetConsoleTextAttribute(h, 7);
+          std::cout << std::endl;
+
+
           this->file << l << std::endl;
 
           if (l != "" ) std::this_thread::sleep_for(std::chrono::milliseconds(int(LOG_TIME_MS / speedMul)));

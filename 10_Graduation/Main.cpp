@@ -7,7 +7,6 @@
 
 #include <io.h>
 #include <fcntl.h>
-#include <windows.h>
 
 #include <chrono>
 #include <thread>
@@ -19,25 +18,47 @@
 //Defines
 #define START_BUN 5
 #define TURN_TIME_MS 2000
-#define CASCADE_MUL 10.0
+#define CASCADE_MUL 20.0
+#define WIDTH 80
+#define HEIGHT 80
+
+//Prototypes
+void InitSettings();
 
 //Functions
 int main(int argc, char** argv) {
-     _setmode(_fileno(stdout), _O_U16TEXT);
-     CONSOLE_FONT_INFOEX cfi;
-     cfi.cbSize = sizeof(cfi);
-     cfi.dwFontSize.X = 0;
-     cfi.dwFontSize.Y = 24;
-     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+     InitSettings();
+
+     //char** grid = new char* [80];
+     //for (int i = 0; i < 80; i++) {
+     //     grid[i] = new char[80];
+     //}
+     //for (int y = 0; y < 80; y++) {
+     //     for (int x = 0; x < 80; x++) {
+     //          grid[x][y] = '*';
+     //     }
+     //}
+     //
+     //for (int y = 0; y < 80; y++) {
+     //     for (int x = 0; x < 80; x++) {
+     //          std::cout << grid[x][y];
+     //          if (x < 79) std::cout << " ";
+     //     }
+     //     std::cout << std::endl;
+     //}
 
      int year = 0;
      bool cull = false;
      std::string header;
-
+     
      srand(time(NULL));
      Logger* logger = new Logger();
+     logger->SetSpeedMul(3.0);
+
      BunnyList* bunnies = new BunnyList(START_BUN, logger);
 
+     //Grid* grid = new Grid(WIDTH, HEIGHT, logger, bunnies);
+     
      logger->AddToLog("");
      do{
           if (_kbhit()) {
@@ -85,4 +106,17 @@ int main(int argc, char** argv) {
      delete logger;
 
      return 0;
+}
+
+void InitSettings() {
+     //_setmode(_fileno(stdout), _O_U16TEXT);
+     CONSOLE_FONT_INFOEX cfi;
+     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+     cfi.cbSize = sizeof(cfi);
+     cfi.dwFontSize.X = 0;
+     cfi.dwFontSize.Y = 16;
+     SetCurrentConsoleFontEx(handle, FALSE, &cfi);
+     system("mode con COLS=700");
+     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+     SendMessage(GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
 }
